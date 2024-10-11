@@ -151,7 +151,7 @@ h3_polygon_to_cells(PG_FUNCTION_ARGS)
 		}
 
 		/* produce hexagons into allocated memory */
-		h3_assert(polygonToCellsExperimental(&polygon, resolution, flags, &maxSize));
+		h3_assert(maxPolygonToCellsSize(&polygon, resolution, flags, &maxSize));
 		indices = palloc_extended(maxSize * sizeof(H3Index),
 								  MCXT_ALLOC_HUGE | MCXT_ALLOC_ZERO);
 		h3_assert(polygonToCellsExperimental(&polygon, resolution, flags, indices));
