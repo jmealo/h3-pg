@@ -29,6 +29,8 @@
 #include "type.h"
 #include "srf.h"
 
+H3Error polygonToCellsExperimental(const GeoPolygon* geoPolygon, int res, uint32_t flags, H3Index* out);
+
 PGDLLEXPORT PG_FUNCTION_INFO_V1(h3_polygon_to_cells);
 PGDLLEXPORT PG_FUNCTION_INFO_V1(h3_cells_to_multi_polygon);
 
@@ -92,7 +94,6 @@ h3_polygon_to_cells(PG_FUNCTION_ARGS)
 		ArrayType  *holes;
 		int			nelems = 0;
 		uint32_t    flags = 2;  // Default to CONTAINMENT_OVERLAPPING
-		# uint32_t    flags = CONTAINMENT_OVERLAPPING;
 		int			resolution;
 		GeoPolygon	polygon;
 		Datum		value;
