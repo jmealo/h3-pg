@@ -12,8 +12,8 @@ set(ENABLE_DOCS       OFF)
 
 FetchContent_Declare(
   h3
-  URL      ${H3_ARCHIVE_URL}
-  URL_HASH SHA256=${H3_CORE_SHA256}
+  GIT_REPOSITORY https://github.com/uber/h3.git
+  GIT_TAG master
 )
 FetchContent_MakeAvailable(h3)
 

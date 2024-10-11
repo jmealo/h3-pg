@@ -92,6 +92,7 @@ h3_polygon_to_cells(PG_FUNCTION_ARGS)
 		ArrayType  *holes;
 		int			nelems = 0;
 		uint32_t    flags = 2;  // Default to CONTAINMENT_OVERLAPPING
+		# uint32_t    flags = CONTAINMENT_OVERLAPPING;
 		int			resolution;
 		GeoPolygon	polygon;
 		Datum		value;
@@ -149,10 +150,10 @@ h3_polygon_to_cells(PG_FUNCTION_ARGS)
 		}
 
 		/* produce hexagons into allocated memory */
-		h3_assert(maxPolygonToCellsSize(&polygon, resolution, flags, &maxSize));
+		h3_assert(polygonToCellsExperimental(&polygon, resolution, flags, &maxSize));
 		indices = palloc_extended(maxSize * sizeof(H3Index),
 								  MCXT_ALLOC_HUGE | MCXT_ALLOC_ZERO);
-		h3_assert(polygonToCells(&polygon, resolution, flags, indices));
+		h3_assert(polygonToCellsExperimental(&polygon, resolution, flags, indices));
 
 		funcctx->user_fctx = indices;
 		funcctx->max_calls = maxSize;
