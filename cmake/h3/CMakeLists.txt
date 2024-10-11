@@ -12,7 +12,7 @@ set(ENABLE_DOCS       OFF)
 
 FetchContent_Declare(
   h3
-  URL      https://github.com/uber/h3/archive/refs/tags/v${H3_CORE_VERSION}.tar.gz
+  URL      ${H3_ARCHIVE_URL}
   URL_HASH SHA256=${H3_CORE_SHA256}
 )
 FetchContent_MakeAvailable(h3)
