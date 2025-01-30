@@ -29,7 +29,10 @@
 #include "type.h"
 #include "srf.h"
 
-H3Error polygonToCellsExperimental(const GeoPolygon* geoPolygon, int res, uint32_t flags, H3Index* out);
+H3Error polygonToCellsExperimental(const GeoPolygon *polygon, int res, uint32_t flags,
+											  int64_t size, H3Index *out);
+
+
 
 PGDLLEXPORT PG_FUNCTION_INFO_V1(h3_polygon_to_cells);
 PGDLLEXPORT PG_FUNCTION_INFO_V1(h3_cells_to_multi_polygon);
@@ -90,7 +93,6 @@ h3_polygon_to_cells(PG_FUNCTION_ARGS)
 		MemoryContextSwitchTo(funcctx->multi_call_memory_ctx);
 
 		int64_t		maxSize;
-		H3Index    *indices;
 		ArrayType  *holes;
 		int			nelems = 0;
 		uint32_t    flags = 2;  // Default to CONTAINMENT_OVERLAPPING
@@ -152,9 +154,9 @@ h3_polygon_to_cells(PG_FUNCTION_ARGS)
 
 		/* produce hexagons into allocated memory */
 		h3_assert(maxPolygonToCellsSize(&polygon, resolution, flags, &maxSize));
-		indices = palloc_extended(maxSize * sizeof(H3Index),
-								  MCXT_ALLOC_HUGE | MCXT_ALLOC_ZERO);
-		h3_assert(polygonToCellsExperimental(&polygon, resolution, flags, indices));
+		H3Index *indices = palloc_extended(maxSize * sizeof(H3Index),
+		                                   MCXT_ALLOC_HUGE | MCXT_ALLOC_ZERO);
+		h3_assert(polygonToCellsExperimental(&polygon, resolution, flags, maxSize, indices));
 
 		funcctx->user_fctx = indices;
 		funcctx->max_calls = maxSize;

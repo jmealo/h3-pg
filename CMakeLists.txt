@@ -36,9 +36,9 @@ project(
 # set this to "${PROJECT_VERSION}" on release
 #set(INSTALL_VERSION "${PROJECT_VERSION}")
 set(INSTALL_VERSION "unreleased")
-#set(H3_CORE_VERSION 4.1.0)
-set(H3_CORE_BRANCH master)
-set(H3_CORE_SHA256 e8b16611b582275bdb9815bc5a80e0559a811758)
+set(H3_CORE_VERSION 4.2.0)
+#set(H3_CORE_BRANCH master)
+#set(H3_CORE_SHA256 e8b16611b582275bdb9815bc5a80e0559a811758)
 
 if(H3_CORE_VERSION)
   set(H3_ARCHIVE_URL, https://github.com/uber/h3/archive/refs/tags/v${H3_CORE_VERSION}.tar.gz)
