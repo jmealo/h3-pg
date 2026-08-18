@@ -83,3 +83,14 @@ RESET enable_bitmapscan;
 SELECT i.idx_between = s.seq_between FROM btree_idx_bw i, btree_seq_bw s;
 SELECT i.idx_between > 0 FROM btree_idx_bw i;
 DROP TABLE btree_idx_bw, btree_seq_bw;
+
+--
+-- TEST equalimage support function is registered
+-- Without support function 4 PostgreSQL silently disables btree
+-- deduplication for every h3index index.
+--
+SELECT COUNT(*) = 1 AS has_equalimage
+  FROM pg_amproc ap
+  JOIN pg_opfamily f ON f.oid = ap.amprocfamily
+  JOIN pg_am am ON am.oid = f.opfmethod
+ WHERE f.opfname = 'h3index_ops' AND am.amname = 'btree' AND ap.amprocnum = 4;
